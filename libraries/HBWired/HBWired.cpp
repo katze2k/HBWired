@@ -13,6 +13,8 @@
 #include "Arduino.h"
 #include <EEPROM.h>
 
+// zeit zwischen jedem Frame / ist blockierend / code wird nur eingefügt, wenn SIFS_TIME definiert ist.
+#define SIFS_TIME 3 // laut protokoll 7 ms
 
 // bus must be idle 210 + rand(0..100) ms
 #define DIFS_CONSTANT 210
@@ -94,6 +96,10 @@ byte HBWDevice::sendFrame(boolean onlyIfIdle){
 // TODO: Wenn als Antwort kein reines ACK kommt, dann geht die Antwort verloren
 //       D.h. sie wird nicht interpretiert. Die Gegenstelle sollte es dann nochmal
 //       senden, aber das ist haesslich (andererseits scheint das nicht zu passieren)
+//Short Interframe Space
+#ifdef SIFS_TIME
+	while (lastReceivedTime + SIFS_TIME >= millis()) { receive(); };
+#endif
 
 // carrier sense
    if(onlyIfIdle) {
