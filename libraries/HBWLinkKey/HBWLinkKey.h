@@ -11,7 +11,7 @@
 #ifndef HBWLinkKey_h
 #define HBWLinkKey_h
 
-#include "HBWired.h"
+#include "..\HBWired\HBWired.h"
 
 class HBWLinkKey : public HBWLinkSender {
   public:

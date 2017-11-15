@@ -8,7 +8,7 @@ HBWSoftwareSerial
 // 
 #include <avr/interrupt.h>
 #include <Arduino.h>
-#include <HBWSoftwareSerial.h>
+#include "HBWSoftwareSerial.h"
 
 #if F_CPU == 16000000
 
