@@ -1,0 +1,34 @@
+// Arduino Nano / ATmega328 board:
+https://www.arduino.cc/en/Main/ArduinoBoardNano
+16 I/O // 6 ADC davon
+1 ADC
+PWM ???
+
+IO Pins:
+0 = Rx
+1 = Tx
+2 = 485-TX Enable
+3 = 
+4 =
+5 =
+6 =
+7 =
+8 =
+9 =
+10 =
+11 =
+12 =
+13 = LED
+14/A0 =
+15/A1 =
+16/A2 =
+17/A3 =
+18/A4 =
+19/A5 =
+A6 = (Analog Input Only)
+A7 = Config Button (Analog Input Only)
+
+https://wiki.fhem.de/wiki/HomeMatic_Namen_verstehen
+HBW-LC-Sw16 -DR
+HBW-Sen-SC16 -DR
+HBW-MOD-MDIR/TH/ LC-SWx -CV (infrarot,temp,feuchte, //licht, 4pwm out, 1 schalt ausgang, Ausgänge für lichter, digital eingang? 

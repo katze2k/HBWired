@@ -1,0 +1,24 @@
+EE Prom Map file - Arduino Nano with AtMega328P has 1024 Byte EE:
+
+0x000...0x006 device configuration: (7 Byte)
++0 ?1 HW Version
++1 ?1 logging time
++2 ?4 Central Address
++6 ?1 direct_link_deactivate
+
+0x007...0x076 channel config on HBW SenSC (7 Byte x 16Channels)
++0 ?1 input_locked;   		// 0x07 /0E
++1 ?1 inverted;				// 0x08 /0F
++2 ?1 pullup;				// 0x09 /10
++3 ?1 long_press_time;      // 0x0A /11
++4 ?1 multiclick_time;		// 0x0B /12
++5 ?1 doubleclickaction;	// 0x0C /13
++6 ?1 longclickaction;		// 0x0D /14
+
+0x100...0x357 100 times direct-LINK table (6 Byte x 100)
++0 ?1 channel
++1 ?4 aktuatoraddress
++5 ?1 aktuatorchannel
+
+0x3FC...0x3FFF highest 4 Bytes for DeviceAdress and DeviceName (4 Byte)
++0 ?4 DeviceAdress = DeviceName
