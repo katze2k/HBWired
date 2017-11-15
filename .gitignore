@@ -3,7 +3,8 @@
 /.core/
 */Release/
 /core/
-
+.ino.cpp
+.gitattributes
 
 # Created by https://www.gitignore.io/api/eclipse
 
