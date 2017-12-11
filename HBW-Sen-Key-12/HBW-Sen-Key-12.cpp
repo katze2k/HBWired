@@ -19,63 +19,20 @@
 // - neue device ID
 //*******************************************************************
 
-
-#define HMW_DEVICETYPE 0x95
-#define HARDWARE_VERSION 0x01
-#define FIRMWARE_VERSION 0x0100
-
-#define NUM_CHANNELS 12
-#define NUM_LINKS 36
-#define LINKADDRESSSTART 0x40
-
 #include <Arduino.h>
-#include "EEPROM\EEPROM.h"			// header only
-#include "FreeRam\FreeRam.h"
-#include "ClickButton\ClickButton.h" // lib for read in buttons
-#include "HBWired\HBWired.h"         // HB Wired protocol and module
-#include "HBWSoftwareSerial\HBWSoftwareSerial.h" //soft serial for rs485 - hardware serial for debug
-#include "HBWLinkKey\HBWLinkKey.h"   // Links Key ->
-//#include "HBWKey\HBWKey.cpp"
-//#include "HBWLinkSwitchSimple\HBWLinkSwitchSimple.cpp"
-//#include "HBWSwitch\HBWSwitch.cpp"
-
-#define RS485_RXD 4
-#define RS485_TXD 2
-#define RS485_TXEN 3  // Transmit-Enable
+#include "HBW-Sen-Key-12.h"		//Device config, Pin Defs
+#include "EEPROM/EEPROM.h"			// EEProm
+#include "FreeRam/FreeRam.h"	// Free RAM Memory
+#include "ClickButton/ClickButton.h" 	// lib for read in buttons
+#include "HBWired/HBWired.h"         // HB Wired protocol and module
+#include "HBWSoftwareSerial/HBWSoftwareSerial.h" //soft serial for rs485 - hardware serial for debug
+#include "HBWLinkKey/HBWLinkKey.h"   // Links Key=button (? 2 Actuator ?)
+//#include "HBWKey/HBWKey.h" //  ?not linked key=button?
+//#include "HBWLinkSwitchSimple/HBWLinkSwitchSimple.h" // ? linked Switch=actuator
+//#include "HBWSwitch/HBWSwitch.h" // ? not linked switch=actuator
 
 // HBWSoftwareSerial can only do 19200 baud
 HBWSoftwareSerial rs485(RS485_RXD, RS485_TXD); // RX, TX
-
-
-// Pins
-#define BUTTON 8  // Button fuer Factory-Reset etc.
-#define LED 13        // Signal-LED
-
-// Das folgende Define kann benutzt werden, wenn ueber die
-// Kanaele "geloopt" werden soll
-// als Define, damit es zentral definiert werden kann, aber keinen (globalen) Speicherplatz braucht
-#define PIN_ARRAY uint8_t pins[NUM_CHANNELS] = {A0, A1, A2, A3, A4, A5, 5, 6, 7, 9, 10, 11};
-
-
-// Config as C++ structure (without direct links)
-struct hbw_config_key {
-  uint8_t input_locked:1;      // 0x07:0    0=LOCKED, 1=UNLOCKED
-  uint8_t inverted:1;          // 0x07:1
-  uint8_t pullup:1;            // 0x07:2
-  uint8_t       :5;            // 0x07:3-7
-  byte long_press_time;       // 0x08
-};
-
-struct hbw_config {
-  uint8_t logging_time;     // 0x01
-  uint32_t central_address;  // 0x02 - 0x05
-  uint8_t direct_link_deactivate:1;   // 0x06:0
-  uint8_t              :7;   // 0x06:1-7
-  hbw_config_key keys[NUM_CHANNELS]; // 0x07-0x1E
-} hbwconfig;
-
-
-
 
 // Class HBSenKey
 class HBSenKey : public HBWChannel {
@@ -108,6 +65,8 @@ class HBSenDevice : public HBWDevice {
       // looks like virtual methods are not properly called here
       afterReadConfig();        
     };
+
+    virtual ~HBSenDevice(){}; //Destructor to avoid Warning
 
     void afterReadConfig() {
         // defaults setzen
